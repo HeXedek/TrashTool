@@ -15,9 +15,10 @@ try
     {
         File.Delete("log.log");
         // Made by HeXED#1753
+        // https://discord.gg/h2eHCC5KmP
     }
 
-    if(File.Exists("versioninfo.tt"))
+    if (File.Exists("versioninfo.tt"))
     {
         File.Delete("verioninfo.tt");
     }
