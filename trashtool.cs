@@ -16,6 +16,7 @@ try
         File.Delete("log.log");
         // Made by HeXED#1753
         // https://discord.gg/h2eHCC5KmP
+        // Join ben server!
     }
 
     if (File.Exists("versioninfo.tt"))
