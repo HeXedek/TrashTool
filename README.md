@@ -1,2 +1,2 @@
 # TrashTool
-(hexedd.ct8.pl/files/trashtool.png)
+!(hexedd.ct8.pl/files/trashtool.png)
