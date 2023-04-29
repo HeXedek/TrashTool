@@ -45,7 +45,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.2");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.3");
         fileStream.Write(bytes, 0, bytes.Length);
     }
 
