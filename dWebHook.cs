@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,9 +28,12 @@ public class dWebHook : IDisposable
         discordValues.Add("username", UserName);
         discordValues.Add("avatar_url", ProfilePicture);
         discordValues.Add("content", msgSend);
-
         dWebClient.UploadValues(WebHook, discordValues);
     }
+        
+
+
+
 
     public void Dispose()
     {
