@@ -511,6 +511,9 @@ try
             WebClient myWebClient3 = new WebClient();
             myStringWebResource3 = remoteUri3 + fileName3;
             myWebClient3.DownloadFile(myStringWebResource3, fileName3);
+            Console.WriteLine("To install this you need to set execution policy");
+            var process1 = Process.Start("powershell", "-command Set-ExecutionPolicy RemoteSigned -Scope CurrentUser");
+            process1.WaitForExit();
             var process = Process.Start("powershell", "-command .\\vencord.ps1");
             process.WaitForExit();
             Console.WriteLine("Installed.");
