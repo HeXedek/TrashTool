@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Drawing;
 
 try
 {
@@ -45,7 +46,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.3");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.4");
         fileStream.Write(bytes, 0, bytes.Length);
     }
 
@@ -93,10 +94,12 @@ try
     Console.SetWindowSize(120, 30);
     log("Windows size set");
     Console.Clear();
+    Console.ForegroundColor = ConsoleColor.Green;
     // Made by HeXED#1753
     Console.Write("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ");
     Console.Write("                                            ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                                          \r\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █                                          \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀                                        ");
     Console.Write("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ");
+    Console.ResetColor();
     System.Threading.Thread.Sleep(3000);
     log("Checking if user agreed.");
     if (File.Exists("data\\agree.tt"))
@@ -181,6 +184,7 @@ try
 
     void Trashtool()
     {
+        Console.ResetColor();
         Console.SetWindowSize(120, 30);
         string selection;
         Console.Clear();
@@ -195,6 +199,7 @@ try
         Console.WriteLine("");
    //   Console.WriteLine("                                           Discord Tools            Other Tools")
         Console.WriteLine("                                        1) Webhook Tools");
+        Console.WriteLine("                                       2) Install Vencord");
         log("Trashtool Started");
         Console.WriteLine("");
         Console.Write("[>]");
@@ -205,7 +210,14 @@ try
         }
         else
         {
-            Trashtool();
+            if (selection == "2")
+            {
+                vencord();
+            }
+            else
+            {
+                Trashtool();
+            }
         }
     }
 
@@ -219,7 +231,7 @@ try
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.Write(" Discord Webhook");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.Write(" Tools"); 
+        Console.Write(" Tools");
         log("Started Webhook Tools");
         Console.WriteLine(" Enter Discord Webhook url: ");
         Console.WriteLine("");
@@ -260,7 +272,7 @@ try
         {
             string message;
             string username;
-            string yn;  
+            string yn;
             log("Webhook: Using normal mode");
             Console.Clear();
             Console.WriteLine("What username your webhook should have?");
@@ -391,7 +403,7 @@ try
             delay = Console.ReadLine();
             log("Delay Set");
             bool onlynumbers = delay.All(char.IsDigit);
-            if(onlynumbers == false)
+            if (onlynumbers == false)
             {
                 delay = String.Empty;
                 webhookspammer();
@@ -441,8 +453,8 @@ try
                             yourmum();
                         }
                     }
-                    
-                    
+
+
                 }
                 log("Stopped");
                 Trashtool();
@@ -464,12 +476,53 @@ try
 
         }
 
+        
+
 
 
 
 
     }
-
+    void vencord()
+    {
+        string selection;
+        log("Vencord installer");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.Clear();
+        Console.Write("                                            █ █ █▀▀ █▀█ █▀▀ █▀█ █▀▄ █▀▄    \r\n                                        ▄▄▄ ▀▄▀ █▀▀ █ █ █   █ █ █▀▄ █ █ ▄▄▄ Installer \r\n                                             ▀  ▀▀▀ ▀ ▀ ▀▀▀ ▀▀▀ ▀ ▀ ▀▀     ");
+        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+        Console.WriteLine("\n-----------------------------------------------------------------------------------------------------------------------");
+        Console.ResetColor();
+        Console.WriteLine("Vencord is Discord Client modification. Works on any Discord Branch. Block even discord analytics ");
+        Console.WriteLine("https://github.com/Vendicated/Vencord");
+        Console.WriteLine("Do you want to install?");
+        Console.WriteLine("");
+        Console.WriteLine("1) Yes");
+        Console.WriteLine("2) No");
+        Console.WriteLine("");
+        Console.Write("[>]");
+        selection = Console.ReadLine();
+        if (selection == "1")
+        {
+            Process[] procs = Process.GetProcessesByName("Discord");
+            foreach (Process p in procs) { p.Kill(); }
+            string remoteUri3 = "https://hexedd.ct8.pl/files/trashtoolfiles/";
+            string fileName3 = "vencord.ps1", myStringWebResource3 = null;
+            WebClient myWebClient3 = new WebClient();
+            myStringWebResource3 = remoteUri3 + fileName3;
+            myWebClient3.DownloadFile(myStringWebResource3, fileName3);
+            var process = Process.Start("powershell", "-command .\\vencord.ps1");
+            process.WaitForExit();
+            Console.WriteLine("Installed.");
+            File.Delete("vencord.ps1");
+            Thread.Sleep(2000);
+            Trashtool();
+        }
+        else
+        {
+            Trashtool();
+        }
+    }
 }
 catch (Exception ex)
 {
