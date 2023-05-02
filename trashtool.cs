@@ -46,7 +46,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.4");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.5");
         fileStream.Write(bytes, 0, bytes.Length);
     }
 
@@ -198,7 +198,7 @@ try
         Console.Write("Other Tools");
         Console.WriteLine("");
    //   Console.WriteLine("                                           Discord Tools            Other Tools")
-        Console.WriteLine("                                        1) Webhook Tools");
+        Console.WriteLine("                                        1) Webhook Tools          3) What's My Ip");
         Console.WriteLine("                                       2) Install Vencord");
         log("Trashtool Started");
         Console.WriteLine("");
@@ -216,7 +216,14 @@ try
             }
             else
             {
-                Trashtool();
+                if (selection == "3")
+                {
+                    ipchecker();
+                }
+                else
+                {
+                    Trashtool();
+                }
             }
         }
     }
@@ -501,6 +508,7 @@ try
         Console.WriteLine("2) No");
         Console.WriteLine("");
         Console.Write("[>]");
+        log("VI: Started");
         selection = Console.ReadLine();
         if (selection == "1")
         {
@@ -512,19 +520,39 @@ try
             myStringWebResource3 = remoteUri3 + fileName3;
             myWebClient3.DownloadFile(myStringWebResource3, fileName3);
             Console.WriteLine("To install this you need to set execution policy");
+            log("Setting execution policy");
             var process1 = Process.Start("powershell", "-command Set-ExecutionPolicy RemoteSigned -Scope CurrentUser");
             process1.WaitForExit();
+            log("Starting installer");
             var process = Process.Start("powershell", "-command .\\vencord.ps1");
             process.WaitForExit();
             Console.WriteLine("Installed.");
+            log("Installer ended");
             File.Delete("vencord.ps1");
             Thread.Sleep(2000);
+            log("Deleted install file");
             Trashtool();
         }
         else
         {
             Trashtool();
         }
+    }
+
+    void ipchecker()
+    {
+        log("Ip checker");
+        string strCmdText;
+        strCmdText = "/C curl ifconfig.me";
+        Console.Clear();
+        var process = System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+        process.WaitForExit();
+        log("Ip displayed");
+
+        Console.WriteLine("\nPress any key to quit.");
+        Console.ReadKey();
+        log("Quit");
+        Trashtool();
     }
 }
 catch (Exception ex)
