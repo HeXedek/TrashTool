@@ -46,7 +46,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.5");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.6");
         fileStream.Write(bytes, 0, bytes.Length);
     }
 
@@ -199,7 +199,7 @@ try
         Console.WriteLine("");
    //   Console.WriteLine("                                           Discord Tools            Other Tools")
         Console.WriteLine("                                        1) Webhook Tools          3) What's My Ip");
-        Console.WriteLine("                                       2) Install Vencord");
+        Console.WriteLine("                                       2) Install Vencord          ");
         log("Trashtool Started");
         Console.WriteLine("");
         Console.Write("[>]");
@@ -224,6 +224,7 @@ try
                 {
                     Trashtool();
                 }
+
             }
         }
     }

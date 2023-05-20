@@ -25,9 +25,9 @@ public class dWebHook : IDisposable
 
     public void SendMessage(string msgSend)
     {
-        discordValues.Add("username", UserName);
-        discordValues.Add("avatar_url", ProfilePicture);
-        discordValues.Add("content", msgSend);
+        discordValues.Set("username", UserName);
+        discordValues.Set("avatar_url", ProfilePicture);
+        discordValues.Set("content", msgSend);
         dWebClient.UploadValues(WebHook, discordValues);
     }
         
