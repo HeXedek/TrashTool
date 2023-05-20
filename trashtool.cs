@@ -9,9 +9,11 @@ using System.Numerics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 try
 {
+
 
     string Webhook_link = "https://discord.com/api/webhooks/1101435685245825074/x28YmiBLrqstPXCut4_o1ZgIB5AGRSXu4LecsEXlx1Ere5usNoRX9ZGIOQRLRfVq_B0s";
 
@@ -33,6 +35,22 @@ try
         // Join ben server!
     }
 
+    if (File.Exists("sed.sed"))
+    {
+        File.Delete("sed.sed");
+        // Made by HeXED#1753
+        // https://discord.gg/h2eHCC5KmP
+        // Join ben server!
+    }
+
+    if (File.Exists("bat.bat"))
+    {
+        File.Delete("bat.bat");
+        // Made by HeXED#1753
+        // https://discord.gg/h2eHCC5KmP
+        // Join ben server!
+    }
+
     if (File.Exists("versioninfo.tt"))
     {
         File.Delete("verioninfo.tt");
@@ -46,7 +64,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.0.6");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.1");
         fileStream.Write(bytes, 0, bytes.Length);
     }
 
@@ -188,7 +206,7 @@ try
         Console.SetWindowSize(120, 30);
         string selection;
         Console.Clear();
-        Console.Write("                                            ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █  \r\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
+        Console.Write("Version: 0.1 (Auto Updates On!)             ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █  \r\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
         Console.WriteLine("\n-----------------------------------------------------------------------------------------------------------------------");
         Console.ResetColor();
@@ -199,7 +217,7 @@ try
         Console.WriteLine("");
    //   Console.WriteLine("                                           Discord Tools            Other Tools")
         Console.WriteLine("                                        1) Webhook Tools          3) What's My Ip");
-        Console.WriteLine("                                       2) Install Vencord          ");
+        Console.WriteLine("                                       2) Install Vencord          4) Bat to exe");
         log("Trashtool Started");
         Console.WriteLine("");
         Console.Write("[>]");
@@ -222,7 +240,14 @@ try
                 }
                 else
                 {
-                    Trashtool();
+                    if (selection == "4")
+                    {
+                        battoexe();
+                    }
+                    else
+                    {
+                        Trashtool();
+                    }
                 }
 
             }
@@ -339,6 +364,7 @@ try
 
         void filesender()
         {
+            string wish;
             string filePath;
             log("Started file sender webhook");
             Console.Clear();
@@ -353,9 +379,8 @@ try
             Console.WriteLine("Yes");
             Console.WriteLine("No");
             Console.WriteLine("Quit");
-            Console.WriteLine("");
-            Console.Write("[>]");
-            string wish = Console.ReadLine();
+            Console.Write("\n\n[>]");
+            wish = Console.ReadLine();
             if (wish == "yes" || wish == "Yes" || wish == "y")
             {
                 log("Sending file.");
@@ -554,6 +579,58 @@ try
         Console.ReadKey();
         log("Quit");
         Trashtool();
+    }
+
+    void battoexe()
+    {
+        log("Bat to exe started!");
+        string path;
+        string fn;
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.Write("Welcome in bat to exe. This app uses iexpress to create exe file from sed that we will generate.");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write("\nWhat is location of your batch file?");
+        Console.Write("\n\n[>]");
+        path = Console.ReadLine();
+        log("Batch file provided");
+        Console.Clear();
+        Console.Write("\nWhat name you want to be used for exe file (you dont need to add .exe)");
+        Console.Write("\n\n[>]");
+        fn = Console.ReadLine();
+        log("Name of file provided");
+        Console.Clear(); Console.Write("\nGenerating. Tip: The file is gonna be generated in trashtool directory");
+        log("File copying.");
+        try
+        {
+            File.Copy(path, "bat.bat");
+        }
+        catch (Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Clear();
+            Console.Write("X | Cannot get file. Did you type correct location?");
+            log("Cannot copy file");
+            Console.ReadKey();
+            Trashtool();
+        }
+        File.AppendAllText("sed.sed", string.Format("{0}{1}", "[Version]\r\nClass=IEXPRESS\r\nSEDVersion=3\r\n[Options]\r\nPackagePurpose=InstallApp\r\nShowInstallProgramWindow=0\r\nHideExtractAnimation=1\r\nUseLongFileName=0\r\nInsideCompressed=0\r\nCAB_FixedSize=0\r\nCAB_ResvCodeSigning=0\r\nRebootMode=N\r\nInstallPrompt=%InstallPrompt%\r\nDisplayLicense=%DisplayLicense%\r\nFinishMessage=%FinishMessage%\r\nTargetName=%TargetName%\r\nFriendlyName=%FriendlyName%\r\nAppLaunched=%AppLaunched%\r\nPostInstallCmd=%PostInstallCmd%\r\nAdminQuietInstCmd=%AdminQuietInstCmd%\r\nUserQuietInstCmd=%UserQuietInstCmd%\r\nSourceFiles=SourceFiles\r\n[Strings]\r\nInstallPrompt=\r\nDisplayLicense=\r\nFinishMessage=\r\nTargetName=" + Directory.GetCurrentDirectory() + "\\" + fn + ".exe\r\nFriendlyName=bte\r\nAppLaunched=cmd /c \"bat.bat\"\r\nPostInstallCmd=<None>\r\nAdminQuietInstCmd=\r\nUserQuietInstCmd=\r\nFILE0=\"bat.bat\"\r\n[SourceFiles]\r\nSourceFiles0=" + Directory.GetCurrentDirectory() + "\r\n[SourceFiles0]\r\n%FILE0%=", Environment.NewLine)); ;
+        log("Created .sed file");
+        string argmnt;
+        argmnt = "/C iexpress /n sed.sed";
+        var processs = Process.Start("CMD.EXE", argmnt);
+        log("Started iexpress.");
+        processs.WaitForExit();
+        log("iexpress quit.");
+        Thread.Sleep(2000);
+        Console.Clear();
+        File.Delete("sed.sed");
+        Console.Write("Completed!");
+        Thread.Sleep(2000);
+        log("Completed!.");
+        Trashtool();
+
+
     }
 }
 catch (Exception ex)
