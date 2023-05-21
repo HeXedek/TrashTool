@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Made by Creper132#1831 -->
+        <!-- Check out creeper site! -->
+        <!-- https://creper132.cf/ -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="title" content="TrashTool">
+        <meta name="description" content="Experiments with things.">
+        <meta name="keywords" content="Trashtool, Tool">
+        <title>TrashTool</title>
+        <link rel="icon" type="image/x-icon" href="/images/iconithink.png">
+
+        <link rel="stylesheet" href="./css/style.css">
+        <title>TrashTool</title>
+        <link 
+            rel="stylesheet" 
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" 
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" 
+            crossorigin="anonymous" 
+            referrerpolicy="no-referrer"
+        />
+        <style>
+            a:link { text-decoration: none; }
+
+
+            a:visited { text-decoration: none; }
+
+
+            a:hover { text-decoration: none; }
+
+
+            a:active { text-decoration: none; }
+
+            #context-menu {
+                position: fixed;
+                z-index: 10000;
+                width: 150px;
+                background: #121212;
+                border-radius: 5px;
+                transform: scale(0);
+                transform-origin: top left;
+                display: block;
+            }   
+
+            #context-menu.visible {
+                transform: scale(1);
+                transition: transform 200ms ease-in-out;
+                display: block;
+            }
+
+            #context-menu .item1 {
+                padding: 8px 10px;
+                font-size: 15px;
+                color: #eee;
+                cursor: pointer;
+                border-radius: inherit;
+                border-width: 0px;
+            }
+
+            #context-menu .item1:hover {
+                background: #343434;
+
+            }
+        </style>
+        <script>
+            console.log("Made by Creper132");
+            console.log("Check out creeper site!");
+            console.log("https://creper132.pl");
+        </script>
+    </head>
+    <body>
+        <div id="context-menu">
+                <a href="https://github.com/HeXedek/TrashTool/releases/download/release/TrashTool.exe"><div class="item1">Download</div></a>
+                <a href="https://discord.gg/ub7s6nDHWa"><div class="item1">TrashTool Discord</div>
+                <a href="https://creper132.pl"><div class="item1">Creator site</div></a>
+        </div>
+        <script>
+            const contextMenu = document.getElementById("context-menu");
+            const scope = document.querySelector("body");
+      
+            const normalizePozition = (mouseX, mouseY) => {
+              // ? compute what is the mouse position relative to the container element (scope)
+              let {
+                left: scopeOffsetX,
+                top: scopeOffsetY,
+              } = scope.getBoundingClientRect();
+              
+              scopeOffsetX = scopeOffsetX < 0 ? 0 : scopeOffsetX;
+              scopeOffsetY = scopeOffsetY < 0 ? 0 : scopeOffsetY;
+             
+              const scopeX = mouseX - scopeOffsetX;
+              const scopeY = mouseY - scopeOffsetY;
+      
+              // ? check if the element will go out of bounds
+              const outOfBoundsOnX =
+                scopeX + contextMenu.clientWidth > scope.clientWidth;
+      
+              const outOfBoundsOnY =
+                scopeY + contextMenu.clientHeight > scope.clientHeight;
+      
+              let normalizedX = mouseX;
+              let normalizedY = mouseY;
+      
+              // ? normalize on X
+              if (outOfBoundsOnX) {
+                normalizedX =
+                  scopeOffsetX + scope.clientWidth - contextMenu.clientWidth;
+              }
+      
+              // ? normalize on Y
+              if (outOfBoundsOnY) {
+                normalizedY =
+                  scopeOffsetY + scope.clientHeight - contextMenu.clientHeight;
+              }
+      
+              return { normalizedX, normalizedY };
+            };
+      
+            scope.addEventListener("contextmenu", (event) => {
+              event.preventDefault();
+      
+              const { clientX: mouseX, clientY: mouseY } = event;
+      
+              const { normalizedX, normalizedY } = normalizePozition(mouseX, mouseY);
+      
+              contextMenu.classList.remove("visible");
+      
+              contextMenu.style.top = `${normalizedY}px`;
+              contextMenu.style.left = `${normalizedX}px`;
+      
+              setTimeout(() => {
+                contextMenu.classList.add("visible");
+              });
+            });
+      
+            scope.addEventListener("click", (e) => {
+              // ? close the menu if the user clicks outside of it
+              if (e.target.offsetParent != contextMenu) {
+                contextMenu.classList.remove("visible");
+              }
+            });
+        </script>
+        <header>
+            <span id="header-name"><b>Trash</b>Tool</span>
+        </header>
+        <main>
+            <div class="box">
+                <div id="rocket">
+                    <i class="fa-solid fa-wrench"></i>
+                </div>
+                <div>
+                <h1>TrashTool</h1>
+                <p>Tool to experiment with some things</p>
+                </div>
+            </div>
+            <div class="box">
+                <img src="/images/trashtool.png" style="padding-bottom: 25px;" alt="">
+                <br>
+                <a href="https://github.com/HeXedek/TrashTool/releases/download/release/TrashTool.exe" target="_blank"><button><i class="fa-solid fa-download"></i> Download</button></a>
+                <a href="https://discord.gg/ub7s6nDHWa" target="_blank"><button><i class="fa-brands fa-discord"></i> Discord</button></a>
+                <p style="font-size: 10px; position: absolute; bottom: 8px; right: 16px">Site made by Creeper132#1831<p>
+            </div>
+        </main>
+        <footer></footer>
+    </body>
+</html>
