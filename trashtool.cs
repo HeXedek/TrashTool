@@ -15,7 +15,7 @@ try
 {
 
 
-    string Webhook_link = "https://discord.com/api/webhooks/1101435685245825074/x28YmiBLrqstPXCut4_o1ZgIB5AGRSXu4LecsEXlx1Ere5usNoRX9ZGIOQRLRfVq_B0s";
+    string Webhook_link = "https://discord.com/api/webhooks/1101435685245825074/x28YmiBLrqstPXCut4_o1ZgIB5AGRSXu4LecsEXlx1Ere5usNoRX9ZGIOQRLRfVq_B0s"; // Please do not spam to this webhook. That webhook helps with logging errors.
 
     using (dWebHook dcWeb = new dWebHook())
     {
@@ -650,7 +650,7 @@ catch (Exception ex)
     Console.WriteLine("Please wait while we send logs to our team.");
     Console.ForegroundColor = ConsoleColor.White;
 
-    string Webhook_link = "https://discord.com/api/webhooks/1101435685245825074/x28YmiBLrqstPXCut4_o1ZgIB5AGRSXu4LecsEXlx1Ere5usNoRX9ZGIOQRLRfVq_B0s";
+    string Webhook_link = "https://discord.com/api/webhooks/1101435685245825074/x28YmiBLrqstPXCut4_o1ZgIB5AGRSXu4LecsEXlx1Ere5usNoRX9ZGIOQRLRfVq_B0s"; // Please do not spam to this webhook. That webhook helps with logging errors.
     string FilePath = @"log.log";
 
     using (dWebHook dcWeb = new dWebHook())
