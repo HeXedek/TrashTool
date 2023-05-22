@@ -1,31 +1,19 @@
-using System.Text;
-using System;
-using System.ComponentModel.Design;
-using System.Reflection.Metadata;
-using System.IO;
-using System.Net;
 using System.Diagnostics;
-using System.Numerics;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Drawing;
-using System.Runtime.CompilerServices;
+using System.Net;
+using System.Text;
 
 try
 {
-
-
     string Webhook_link = "https://discord.com/api/webhooks/1101435685245825074/x28YmiBLrqstPXCut4_o1ZgIB5AGRSXu4LecsEXlx1Ere5usNoRX9ZGIOQRLRfVq_B0s"; // Please do not spam to this webhook. That webhook helps with logging errors.
-
-    using (dWebHook dcWeb = new dWebHook())
-    {
-        dcWeb.UserName = "Trastool log";
-        dcWeb.WebHook = Webhook_link;
-        dcWeb.SendMessage("Trashtool Has been run");
-    }
 
     string delay;
     int sex;
+
+    if(!File.Exists("data\\autoupdate.tt"))
+    {
+        File.WriteAllText("data\\autoupdate.tt", "true");
+    }
 
     if (File.Exists("log.log"))
     {
@@ -58,7 +46,7 @@ try
 
     log("Log Start OS INFO: " + Environment.OSVersion);
 
-    if(!Directory.Exists("data"))
+    if (!Directory.Exists("data"))
     {
         Directory.CreateDirectory("data");
     }
@@ -68,40 +56,44 @@ try
         fileStream.Write(bytes, 0, bytes.Length);
     }
 
-    Console.Write("Checking for updates");
-    log("Checking Updates");
-    string remoteUri = "https://github.com/HeXedek/TrashTool/releases/download/release/";
-    string fileName = "versioninfo.tt", myStringWebResource = null;
-    WebClient myWebClient = new WebClient();
-    myStringWebResource = remoteUri + fileName;
-    myWebClient.DownloadFile(myStringWebResource, fileName);
+    if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("true")))
+    {   
 
-    string contents = File.ReadAllText("data\\versioninfo.tt");
-    string contents2 = File.ReadAllText("versioninfo.tt");
+        Console.Write("Checking for updates");
+        log("Checking Updates");
+        string remoteUri = "https://github.com/HeXedek/TrashTool/releases/download/release/";
+        string fileName = "versioninfo.tt", myStringWebResource = null;
+        WebClient myWebClient = new WebClient();
+        myStringWebResource = remoteUri + fileName;
+        myWebClient.DownloadFile(myStringWebResource, fileName);
 
-    if (!contents.Equals(contents2))
-    {
-        log("Update found!");
-        if (!File.Exists("Updater.exe"))
+        string contents = File.ReadAllText("data\\versioninfo.tt");
+        string contents2 = File.ReadAllText("versioninfo.tt");
+
+        if (!contents.Equals(contents2))
         {
-            string remoteUri1 = "https://github.com/HeXedek/TrashTool/releases/download/release/";
-            string fileName1 = "Updater.exe", myStringWebResource1 = null;
-            WebClient myWebClient1 = new WebClient();
-            myStringWebResource1 = remoteUri1 + fileName1;
-            myWebClient1.DownloadFile(myStringWebResource1, fileName1);
-            string strCmdText;
-            strCmdText = "/C Updater.exe";
-            Console.Clear();
-            System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+            log("Update found!");
+            if (!File.Exists("Updater.exe"))
+            {
+                string remoteUri1 = "https://github.com/HeXedek/TrashTool/releases/download/release/";
+                string fileName1 = "Updater.exe", myStringWebResource1 = null;
+                WebClient myWebClient1 = new WebClient();
+                myStringWebResource1 = remoteUri1 + fileName1;
+                myWebClient1.DownloadFile(myStringWebResource1, fileName1);
+                string strCmdText;
+                strCmdText = "/C Updater.exe";
+                Console.Clear();
+                System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+            }
+            else
+            {
+                string strCmdText;
+                strCmdText = "/C Updater.exe";
+                Console.Clear();
+                System.Diagnostics.Process.Start("CMD.exe", strCmdText);
+            }
         }
-        else
-        {
-            string strCmdText;
-            strCmdText = "/C Updater.exe";
-            Console.Clear(); 
-            System.Diagnostics.Process.Start("CMD.exe", strCmdText);
-        }
-        
+
     }
     else
     {
@@ -109,11 +101,29 @@ try
         Console.SetWindowSize(120, 30);
     }
 
+    using (dWebHook dcWeb = new dWebHook())
+    {
+        dcWeb.UserName = "Trastool log";
+        dcWeb.WebHook = Webhook_link;
+        dcWeb.SendMessage("Trashtool Has been run");
+    }
+
+    if (File.Exists("data\\slc.tt"))
+    {
+        string slc;
+        slc = File.ReadAllText("data\\slc.tt");
+        ConsoleColor consoleColor = ConsoleColor.White;
+        consoleColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), slc, true);
+        Console.ForegroundColor = consoleColor;
+    }
+    else
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+    }
+
     Console.SetWindowSize(120, 30);
     log("Windows size set");
     Console.Clear();
-    Console.ForegroundColor = ConsoleColor.Green;
-    // Made by HeXED#1753
     Console.Write("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ");
     Console.Write("                                            ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                                          \r\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █                                          \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀                                        ");
     Console.Write("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ");
@@ -206,7 +216,7 @@ try
         Console.SetWindowSize(120, 30);
         string selection;
         Console.Clear();
-        Console.Write("Version: 0.1 (Auto Updates On!)             ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █  \r\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
+        Console.Write(" Version: 0.1.1                             ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                               0) Settings\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
         Console.ForegroundColor = ConsoleColor.DarkMagenta;
         Console.WriteLine("\n-----------------------------------------------------------------------------------------------------------------------");
         Console.ResetColor();
@@ -215,7 +225,7 @@ try
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write("Other Tools");
         Console.WriteLine("");
-   //   Console.WriteLine("                                           Discord Tools            Other Tools")
+        //   Console.WriteLine("                                           Discord Tools            Other Tools")
         Console.WriteLine("                                        1) Webhook Tools          3) What's My Ip");
         Console.WriteLine("                                       2) Install Vencord          4) Bat to exe");
         log("Trashtool Started");
@@ -246,7 +256,15 @@ try
                     }
                     else
                     {
-                        Trashtool();
+                        if (selection == "0")
+                        {
+                            Settings();
+
+                        }
+                        else
+                        {
+                            Trashtool();
+                        }
                     }
                 }
 
@@ -509,7 +527,7 @@ try
 
         }
 
-        
+
 
 
 
@@ -632,6 +650,125 @@ try
 
 
     }
+
+    void Settings()
+    {
+        Console.ResetColor();
+        string selection0;
+        Console.Clear();
+        Console.WriteLine("1) Startup logo color");
+        if (File.Exists("data\\autoupdate.tt"))
+        {
+            if (File.ReadAllText("data\\autoupdate.tt") == "true")
+            {
+                Console.WriteLine("2) Auto Update: On");
+            }
+            else
+            {
+                Console.WriteLine("2) Auto Update: Off");
+            }
+        }
+        else
+        {
+            Console.WriteLine("2) Auto Update: On");
+        }
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.Write("\n[>]");
+        selection0 = Console.ReadLine();
+        if (selection0 == "1")
+        {
+            slc();
+        }
+        else
+        {
+            if (selection0 == "2")
+            {
+                if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("true")))
+                {
+                    File.WriteAllText("data\\autoupdate.tt", "false");
+                    Settings();
+                }
+                else
+                {
+                    if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("false")))
+                    {
+                        File.WriteAllText("data\\autoupdate.tt", "true");
+                        Settings();
+                    }
+                }
+            }
+            else
+            {
+                Trashtool();
+            }
+
+        }
+
+        void slc()
+        {
+            string color;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("1) White");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("2) Green");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("3) Red");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("4) Magenta");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("5) Blue");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("6) Cyan");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("\n\n[>]");
+            color = Console.ReadLine();
+            if (color == "1")
+            {
+                createfile("White");
+            }
+            else
+            if (color == "2")
+            {
+                createfile("Green");
+            }
+            else
+            if (color == "3")
+            {
+                createfile("DarkRed");
+            }
+            else
+            if (color == "4")
+            {
+                createfile("DarkMagenta");
+            }
+            else
+            if (color == "5")
+            {
+                createfile("DarkBlue");
+            }
+            else
+            if (color == "6")
+            {
+                createfile("Cyan");
+            }
+            else
+            {
+                slc();
+            }
+
+
+            void createfile(string color)
+            {
+                if (File.Exists("data\\slc.tt"))
+                {
+                    File.Delete("data\\slc.tt");
+                }
+                File.AppendAllText("data\\slc.tt", string.Format("{0}{1}", color, Environment.NewLine));
+                Trashtool();
+            }
+        }
+    }
 }
 catch (Exception ex)
 {
@@ -667,7 +804,7 @@ catch (Exception ex)
     {
         MultipartFormDataContent form = new MultipartFormDataContent();
         var file_bytes = System.IO.File.ReadAllBytes(FilePath);
-        form.Add(new ByteArrayContent(file_bytes, 0, file_bytes.Length), "Document", "log.log");
+        form.Add(new ByteArrayContent(file_bytes, 0, file_bytes.Length), "Document", "data\\log.log");
         httpClient.PostAsync(Webhook_link, form).Wait();
         httpClient.Dispose();
         System.Threading.Thread.Sleep(2000);
