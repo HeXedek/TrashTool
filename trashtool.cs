@@ -10,7 +10,7 @@ byte[] data = Convert.FromBase64String(whb);
 try
 {
 
-    Console.Title = "TrashTool (Beta 0.1.5)";
+    Console.Title = "TrashTool (Beta 0.2)";
 
     if (File.Exists("log.log"))
     {
@@ -50,7 +50,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.1.4");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.2");
         fileStream.Write(bytes, 0, bytes.Length);
     }
     if(!File.Exists("data\\autoupdate.tt"))
@@ -227,7 +227,7 @@ try
         Console.SetWindowSize(120, 30);
         string selection;
         Console.Clear();
-        Console.Write("Version: 0.1.5                              ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                                0) Settings                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
+        Console.Write("Version: 0.2.0                              ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                                0) Settings                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.Write("\n------------------------------------------------------------------------------------------------------------------------");
         Console.ResetColor();
@@ -313,6 +313,7 @@ try
         Console.WriteLine("1) Send normal Message");
         Console.WriteLine("2) Send File");
         Console.WriteLine("3) Webhook Spammer");
+        Console.WriteLine("4) Webhook Delete");
         Console.WriteLine("");
         Console.Write("[>]");
         response = Console.ReadLine();
@@ -334,7 +335,14 @@ try
                 }
                 else
                 {
-                    webhooksender();
+                    if (response == "4")
+                    {
+                        webhookdelete();
+                    }
+                    else
+                    {
+                        webhooksender();
+                    }
                 }
             }
 
@@ -499,7 +507,7 @@ try
             }
             else
             {
-                if (wish == "No" || wish == "no" || wish == "n")
+                if (wish == "No" || wish == "no" || wish == "n" || wish == "N")
                 {
                     filesender();
                     log("Restarted filesender");
@@ -528,7 +536,7 @@ try
             Console.WriteLine("");
             Console.WriteLine("[>]");
             message1 = Console.ReadLine();
-            if(string.IsNullOrEmpty(message1))
+            if (string.IsNullOrEmpty(message1))
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -561,7 +569,7 @@ try
             Console.WriteLine("");
             log("Showed message");
             log("Trying to convert string into int");
-            if(string.IsNullOrEmpty(delay))
+            if (string.IsNullOrEmpty(delay))
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -627,10 +635,69 @@ try
             }
             else
             {
-                if (ynt == "No" || ynt == "no" || ynt == "n")
+                if (ynt == "No" || ynt == "no" || ynt == "n" || ynt == "N")
                 {
-                    webhookspammer();
-                    log("restarted spammer");
+                    webhooksender();
+                    log("Restarted sender");
+                }
+                else
+                {
+                    Trashtool();
+                    log("Quit.");
+                }
+            }
+
+        }
+
+        void webhookdelete()
+        {
+            log("Started webhook deletion");
+            string ynt;
+            Console.Clear();
+            Console.Write("Are you sure you want to delete this webhook? (y/n)");
+            Console.WriteLine("");
+            Console.WriteLine("Yes");
+            Console.WriteLine("No");
+            Console.WriteLine("Quit");
+            Console.WriteLine("");
+            log("Showed message");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("\n[>]");
+            ynt = Console.ReadLine();
+            if(ynt == "yes" || ynt == "Yes" || ynt == "y" || ynt == "Y")
+            {
+                try
+                {
+
+                    //Create a new WebRequest with a DELETE method, and get the url (https://docs.microsoft.com/en-us/dotnet/api/system.net.webrequest?view=net-5.0)
+                    var request = WebRequest.Create(wurl);
+                    request.Method = "DELETE";
+                    var response = (HttpWebResponse)request.GetResponse();
+
+                    Console.Write("\n\nWebhook has been deleted!");
+                    Thread.Sleep(3000);
+                    Trashtool();
+
+                }
+                catch (Exception ex)
+                {
+                    File.AppendAllText("log.log", string.Format("{0}{1}", "------------------------------ERROR------------------------------", Environment.NewLine));
+                    File.AppendAllText("log.log", string.Format("{0}{1}", "Error has been catched", Environment.NewLine));
+                    File.AppendAllText("log.log", string.Format("{0}{1}", "Message: " + ex.Message, Environment.NewLine));
+                    File.AppendAllText("log.log", string.Format("{0}{1}", "Date and Time: " + " [" + DateTime.Now.ToString() + "]", Environment.NewLine));
+                    File.AppendAllText("log.log", string.Format("{0}{1}", "------------------------------ERROR------------------------------", Environment.NewLine));
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write("\n\nFailed to delete webhook check log for more details.");
+                    Thread.Sleep(3000);
+                    Trashtool();
+                }
+            }
+            else
+            {
+                if(ynt == "No" || ynt == "no" || ynt == "n" || ynt == "N")
+                {
+                    webhooksender();
+                    log("Restarted sender");
                 }
                 else
                 {
@@ -908,6 +975,7 @@ try
 }
 catch (Exception ex)
 {
+    log("Unknown error happened");
     File.AppendAllText("log.log", string.Format("{0}{1}", "------------------------------ERROR------------------------------", Environment.NewLine));
     File.AppendAllText("log.log", string.Format("{0}{1}", "Error has been catched", Environment.NewLine));
     File.AppendAllText("log.log", string.Format("{0}{1}", "Message: " + ex.Message, Environment.NewLine));
