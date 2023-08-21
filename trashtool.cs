@@ -1,16 +1,44 @@
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
 using System.Numerics;
 using System.Text;
 
-string whb = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTEwMTQzNTY4NTI0NTgyNTA3NC94MjhZbWlCTHJxc3RQWEN1dDRfbzFaZ0lCNUFHUlNYdTRMZWNzRVhseDFFcmU1dXNOb1JYOVpHSU9RUkxSZlZxX0Iwcw=="; // Please do not spam to this webhook. That webhook helps with logging errors.
-byte[] data = Convert.FromBase64String(whb);
-
 try
 {
+    int devbuildint = 1;
+    string build = "0.2";
 
-    Console.Title = "TrashTool (Beta 0.2)";
+    if (devbuildint == 1)
+    {
+        if (!File.Exists("data\\dbuild.tt"))
+        {
+            using (FileStream fileStream = File.Create("data\\dbuild.tt"))
+            {
+                byte[] bytes = new UTF8Encoding(true).GetBytes("1");
+                fileStream.Write(bytes, 0, bytes.Length);
+            }
+        }
+
+        string devbuild = File.ReadAllText("data\\dbuild.tt");
+        int x = Int32.Parse(devbuild);
+
+        build = "DEV BUILD: 23" + DateTime.Today.DayOfYear + x++;
+
+        int y = x++;
+
+        using (FileStream fileStream = File.Create("data\\dbuild.tt"))
+        {
+            byte[] bytes = new UTF8Encoding(true).GetBytes(y.ToString());
+            fileStream.Write(bytes, 0, bytes.Length);
+        }
+
+        Console.Title = "TrashTool " + build;
+    }
+
+    ConsoleColor consoleColor = ConsoleColor.White;
+    string slc;
 
     if (File.Exists("log.log"))
     {
@@ -53,7 +81,7 @@ try
         byte[] bytes = new UTF8Encoding(true).GetBytes("0.2");
         fileStream.Write(bytes, 0, bytes.Length);
     }
-    if(!File.Exists("data\\autoupdate.tt"))
+    if (!File.Exists("data\\autoupdate.tt"))
     {
         using (FileStream fileStream = File.Create("data\\autoupdate.tt"))
         {
@@ -63,7 +91,7 @@ try
     }
 
     if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("true")))
-    {   
+    {
 
         Console.Write("Checking for updates");
         log("Checking Updates");
@@ -79,6 +107,8 @@ try
         if (!contents.Equals(contents2))
         {
             log("Update found!");
+            Console.Clear();
+            Console.WriteLine("Preparing for update...");
             if (!File.Exists("Updater.exe"))
             {
                 string remoteUri1 = "https://github.com/HeXedek/TrashTool/releases/download/release/";
@@ -108,24 +138,16 @@ try
         Console.SetWindowSize(120, 30);
     }
 
-    using (dWebHook dcWeb = new dWebHook())
-    {
-        dcWeb.UserName = "Trastool log";
-        dcWeb.WebHook = System.Text.Encoding.UTF8.GetString(data);
-        dcWeb.SendMessage("Trashtool Has been run");
-    }
 
     if (File.Exists("data\\slc.tt"))
     {
-        string slc;
         slc = File.ReadAllText("data\\slc.tt");
-        ConsoleColor consoleColor = ConsoleColor.White;
         consoleColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), slc, true);
         Console.ForegroundColor = consoleColor;
     }
     else
     {
-        Console.ForegroundColor = ConsoleColor.Green;
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
     if (File.Exists("versioninfo.tt"))
@@ -133,6 +155,11 @@ try
         File.Delete("versioninfo.tt");
     }
     Console.SetWindowSize(120, 30);
+    if (devbuildint == 1)
+    {
+        System.Threading.Thread.Sleep(1);
+        Trashtool();
+    }
     log("Windows size set");
     Console.Clear();
     Console.Write("                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ");
@@ -221,60 +248,144 @@ try
 
     }
 
+
+
     void Trashtool()
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.SetWindowSize(120, 30);
         string selection;
         Console.Clear();
-        Console.Write("Version: 0.2.0                              ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                                0) Settings                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █  \r\n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.Write("\n------------------------------------------------------------------------------------------------------------------------");
-        Console.ResetColor();
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write("                                           Discord Tools            ");
         Console.ForegroundColor = ConsoleColor.White;
-        Console.Write("Other Tools");
-        Console.WriteLine("");
-   //   Console.WriteLine("                                           Discord Tools            Other Tools")
-        Console.WriteLine("                                        1) Webhook Tools          3) What's My Ip");
-        Console.WriteLine("                                       2) Install Vencord          4) Bat to exe");
-        log("Trashtool Started");
-        Console.WriteLine("");
-        Console.Write("[>]");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n\n\n\n\n\n\n\n                                            ▀█▀ █▀▄ █▀█ █▀▀ █ █ ▀█▀ █▀█ █▀█ █                               ");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █                                          \n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀                                        ");
+        Console.ForegroundColor= ConsoleColor.White;
+        Console.Write("                                                     " + build);
+        Console.ResetColor();
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n            Discord Tools                              Other Tools                            TrashTool");
+        Console.ResetColor();
+        Console.WriteLine("\n┌─────────────────────────────────────┬────────────────────────────────────────┬──────────────────────────────────────┐");
+        Console.Write("│");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("        [01] ");
+        Console.ResetColor();
+        Console.Write("Webhook Tools           │            ");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("[03] ");
+        Console.ResetColor();
+        Console.Write("What's my IP           │           ");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("[08] ");
+        Console.ResetColor();
+        Console.Write("Main color            │");
+        Console.Write("\n│");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("        [02]");
+        Console.ResetColor();
+        Console.Write(" Vencord Installer       │            ");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("[04]");
+        Console.ResetColor();
+        Console.Write(" Bat to Exe             │           ");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("[09]");
+        Console.ResetColor();
+
+        if (File.Exists("data\\autoupdate.tt"))
+        {
+            if (File.ReadAllText("data\\autoupdate.tt") == "true")
+            {
+                log("Autoupdate is on");
+                Console.Write(" Auto Update: On       │");
+            }
+            else
+            {
+                log("Autoupdate is off");
+                Console.Write(" Auto Update: Off      │");
+            }
+        }
+        else
+        {
+            log("Autoupdate is on");
+            Console.Write(" Auto Update: On");
+        }
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n│                                     │                                        │                                      │");
+        Console.Write("\n└─────────────────────────────────────┴────────────────────────────────────────┴──────────────────────────────────────┘");
+
+
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n\n\n\n\n\n[>]");
         selection = Console.ReadLine();
-        if (selection == "1")
+        if (selection == "1" || selection == "01")
         {
             webhooksender();
         }
         else
         {
-            if (selection == "2")
+            if (selection == "2" || selection == "02")
             {
                 vencord();
             }
             else
             {
-                if (selection == "3")
+                if (selection == "3" || selection == "03")
                 {
                     ipchecker();
                 }
                 else
                 {
-                    if (selection == "4")
+                    if (selection == "4" || selection == "04")
                     {
                         battoexe();
                     }
                     else
                     {
-                        if (selection == "0")
+                        if (selection == "8" || selection == "08")
                         {
-                            Settings();
-
+                            maincolor();
                         }
                         else
                         {
-                            Trashtool();
+                            if (selection == "9" || selection == "09")
+                            {
+                                if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("true")))
+                                {
+                                    log("Autoupdate has been turned off");
+                                    using (FileStream fileStream = File.Create("data\\autoupdate.tt"))
+                                    {
+                                        byte[] bytes = new UTF8Encoding(true).GetBytes("false");
+                                        fileStream.Write(bytes, 0, bytes.Length);
+                                    }
+                                    Trashtool();
+                                }
+                                else
+                                {
+                                    if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("false")))
+                                    {
+                                        log("Autoupdate has been turned on");
+                                        using (FileStream fileStream = File.Create("data\\autoupdate.tt"))
+                                        {
+                                            byte[] bytes = new UTF8Encoding(true).GetBytes("true");
+                                            fileStream.Write(bytes, 0, bytes.Length);
+                                        }
+                                        Trashtool();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Trashtool();
+                            }
                         }
                     }
                 }
@@ -287,16 +398,12 @@ try
     {
         string wurl;
         string response;
-        log("webhook sender started");
+        log("Webhook sender started");
         Console.Clear();
-        Console.Write("Welcome To");
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.Write(" Discord Webhook");
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.Write(" Tools");
         log("Started Webhook Tools");
-        Console.WriteLine(" Enter Discord Webhook url: ");
-        Console.WriteLine("");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("                                                        Enter Url");
+        Console.ForegroundColor = consoleColor;
         Console.Write("[>]");
         log("Webhook is set");
         wurl = Console.ReadLine();
@@ -310,12 +417,24 @@ try
             webhooksender();
         }
         Console.Clear();
-        Console.WriteLine("1) Send normal Message");
-        Console.WriteLine("2) Send File");
-        Console.WriteLine("3) Webhook Spammer");
-        Console.WriteLine("4) Webhook Delete");
-        Console.WriteLine("");
-        Console.Write("[>]");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n                                                     1)");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(" Send Message");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n                                                     2)");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(" Send File");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n                                                     3)");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(" Webhook Spammer");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n                                                     4)");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write(" Delete Webhook");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n[>]");
         response = Console.ReadLine();
         if (response == "1")
         {
@@ -354,15 +473,17 @@ try
             string yn;
             log("Webhook: Using normal mode");
             Console.Clear();
-            Console.WriteLine("What username your webhook should have?");
-            Console.WriteLine("");
-            Console.WriteLine("[>]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("                                                     Enter Username");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n[>]");
             username = Console.ReadLine();
             log("Webhook: Username set");
             Console.Clear();
-            Console.WriteLine("What message you want to send?");
-            Console.WriteLine("");
-            Console.WriteLine("[>]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("                                                      Enter Message");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n[>]");
             message = Console.ReadLine();
             if (string.IsNullOrEmpty(message))
             {
@@ -375,15 +496,30 @@ try
             }
             log("Message set");
             Console.Clear();
-            Console.WriteLine("Your webhook name is: " + username + " and message is: " + message + " Do you wish to send?");
-            Console.WriteLine("");
-            Console.WriteLine("Yes");
-            Console.WriteLine("No");
-            Console.WriteLine("Quit");
-            Console.WriteLine("");
-            Console.Write("[>]");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("Username: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(username);
+            Console.ForegroundColor = consoleColor;
+            Console.Write(" Message: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(message);
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n                                                     1)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Send");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                     2)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Change info");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                     3)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Quit");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n[>]");
             yn = Console.ReadLine();
-            if (yn == "yes" || yn == "Yes" || yn == "y")
+            if (yn == "1")
             {
                 try
                 {
@@ -401,7 +537,7 @@ try
                         Trashtool();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -423,13 +559,13 @@ try
             }
             else
             {
-                if (yn == "No" || yn == "no" || yn == "n")
+                if (yn == "2")
                 {
-                    Normal();
+                    webhooksender();
                 }
                 else
                 {
-                    webhooksender();
+                    Trashtool();
                 }
             }
 
@@ -444,9 +580,10 @@ try
             string filePath;
             log("Started file sender webhook");
             Console.Clear();
-            Console.WriteLine("Paste in your file location");
-            Console.WriteLine("");
-            Console.Write("[>]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("                                                      File location");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n[>]");
             filePath = Console.ReadLine();
             if (string.IsNullOrEmpty(filePath))
             {
@@ -458,15 +595,29 @@ try
                 filesender();
             }
             log("FilePath set");
+            Console.ResetColor();
             Console.Clear();
-            Console.WriteLine("You are sending this file: " + filePath + " Do you wish to send?");
-            Console.WriteLine("");
-            Console.WriteLine("Yes");
-            Console.WriteLine("No");
-            Console.WriteLine("Quit");
-            Console.Write("\n\n[>]");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("File Location: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(filePath);
+            Console.ForegroundColor = consoleColor;
+            Console.Write(" Send?");
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n                                                     1)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Send");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                     2)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Change info");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                     3)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Quit");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n[>]");
             wish = Console.ReadLine();
-            if (wish == "yes" || wish == "Yes" || wish == "y")
+            if (wish == "1")
             {
                 try
                 {
@@ -486,7 +637,7 @@ try
                     System.Threading.Thread.Sleep(1500);
                     Trashtool();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -502,20 +653,19 @@ try
                     Thread.Sleep(3500);
                     Trashtool();
                 }
-                
+
 
             }
             else
             {
-                if (wish == "No" || wish == "no" || wish == "n" || wish == "N")
+                if (wish == "2")
                 {
                     filesender();
                     log("Restarted filesender");
                 }
                 else
                 {
-                    webhooksender();
-                    log("Quit.");
+                    Trashtool();
                 }
             }
 
@@ -532,9 +682,10 @@ try
             string ynt;
             log("Webhook: Using spam mode");
             Console.Clear();
-            Console.WriteLine("What message you want to send?");
-            Console.WriteLine("");
-            Console.WriteLine("[>]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("                                                      Enter Message");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n[>]");
             message1 = Console.ReadLine();
             if (string.IsNullOrEmpty(message1))
             {
@@ -547,9 +698,10 @@ try
             }
             log("Message set");
             Console.Clear();
-            Console.WriteLine("What delay you want to set?");
-            Console.WriteLine("");
-            Console.WriteLine("[>]");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("                                                        Enter Delay");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n[>]");
             delay = Console.ReadLine();
             log("Delay Set");
             bool onlynumbers = delay.All(char.IsDigit);
@@ -561,13 +713,6 @@ try
             }
             Console.Clear();
             log("There are numbers. Can go");
-            Console.WriteLine("Your Webhook message is: " + message1 + " Do you wish to spam?");
-            Console.WriteLine("");
-            Console.WriteLine("Yes");
-            Console.WriteLine("No");
-            Console.WriteLine("Quit");
-            Console.WriteLine("");
-            log("Showed message");
             log("Trying to convert string into int");
             if (string.IsNullOrEmpty(delay))
             {
@@ -589,9 +734,27 @@ try
                 Console.WriteLine("Something went wrong.");
             }
             log("Delay string was converted into int");
-            Console.Write("[>]");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("Message: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(message1);
+            Console.ForegroundColor = consoleColor;
+            Console.Write(" Send?");
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n                                                     1)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Send");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                     2)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Change info");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                     3)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Quit");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n[>]");
             ynt = Console.ReadLine();
-            if (ynt == "yes" || ynt == "Yes" || ynt == "y")
+            if (ynt == "1")
             {
                 log("Spamming");
                 Console.WriteLine(sex);
@@ -635,7 +798,7 @@ try
             }
             else
             {
-                if (ynt == "No" || ynt == "no" || ynt == "n" || ynt == "N")
+                if (ynt == "2")
                 {
                     webhooksender();
                     log("Restarted sender");
@@ -654,17 +817,21 @@ try
             log("Started webhook deletion");
             string ynt;
             Console.Clear();
-            Console.Write("Are you sure you want to delete this webhook? (y/n)");
-            Console.WriteLine("");
-            Console.WriteLine("Yes");
-            Console.WriteLine("No");
-            Console.WriteLine("Quit");
-            Console.WriteLine("");
+            Console.Write("                                                     Are you sure?");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n                                                       1)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Yes");
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n                                                       2)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" No");
+            Console.ForegroundColor = consoleColor;
+            Console.ForegroundColor = consoleColor;
+            Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n[>]");
             log("Showed message");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("\n[>]");
             ynt = Console.ReadLine();
-            if(ynt == "yes" || ynt == "Yes" || ynt == "y" || ynt == "Y")
+            if (ynt == "1")
             {
                 try
                 {
@@ -694,10 +861,10 @@ try
             }
             else
             {
-                if(ynt == "No" || ynt == "no" || ynt == "n" || ynt == "N")
+                if (ynt == "2")
                 {
-                    webhooksender();
-                    log("Restarted sender");
+                    Trashtool();
+                    log("Quit.");
                 }
                 else
                 {
@@ -783,26 +950,45 @@ try
     void battoexe()
     {
         log("Bat to exe started!");
-        string path;
+        string filepath;
         string fn;
         Console.Clear();
-        Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.Write("Welcome in bat to exe. This app uses iexpress to create exe file from sed that we will generate.");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("\nWhat is location of your batch file?");
-        Console.Write("\n\n[>]");
-        path = Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("                                                      File location");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n[>]");
+        filepath = Console.ReadLine();
+        if (string.IsNullOrEmpty(filepath))
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("File path cannot be empty");
+            Console.ResetColor();
+            Thread.Sleep(3000);
+            battoexe();
+        }
         log("Batch file provided");
         Console.Clear();
-        Console.Write("\nWhat name you want to be used for exe file (you dont need to add .exe)");
-        Console.Write("\n\n[>]");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Write("                                                    File output name");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n[>]");
         fn = Console.ReadLine();
+        if (string.IsNullOrEmpty(fn))
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Name cannot be empty");
+            Console.ResetColor();
+            Thread.Sleep(3000);
+            battoexe();
+        }
         log("Name of file provided");
-        Console.Clear(); Console.Write("\nGenerating. Tip: The file is gonna be generated in trashtool directory");
+        Console.Clear(); Console.ForegroundColor = ConsoleColor.White; Console.Write("\nGenerating");
         log("File copying.");
         try
         {
-            File.Copy(path, "bat.bat");
+            File.Copy(filepath, "bat.bat");
         }
         catch (Exception ex)
         {
@@ -825,154 +1011,96 @@ try
         Console.Clear();
         File.Delete("bat.bat");
         File.Delete("sed.sed");
-        Console.Write("Completed!");
-        Thread.Sleep(2000);
+        Console.Write("Completed. File is in TrashTool directory");
+        Thread.Sleep(3500);
         log("Completed!.");
         Trashtool();
 
 
     }
 
-    void Settings()
+    void maincolor()
     {
-        log("Settings");
-        Console.ForegroundColor = ConsoleColor.White;
-        string selection0;
+        log("Settings: Main Color(needs restart)");
+        string color;
         Console.Clear();
-        Console.WriteLine("1) Startup logo color");
-        if (File.Exists("data\\autoupdate.tt"))
-        {
-            if (File.ReadAllText("data\\autoupdate.tt") == "true")
-            {
-                log("Autoupdate is on");
-                Console.WriteLine("2) Auto Update: On");
-            }
-            else
-            {
-                log("Autoupdate is off");
-                Console.WriteLine("2) Auto Update: Off");
-            }
-        }
-        else
-        {
-            log("Autoupdate is on");
-            Console.WriteLine("2) Auto Update: On");
-        }
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n                                                     1) White");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("                                                     2) Green");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("                                                     3) Red");
+        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+        Console.WriteLine("                                                     4) Magenta");
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("                                                     5) Blue");
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("\n[>]");
-        selection0 = Console.ReadLine();
-        if (selection0 == "1")
+        Console.WriteLine("                                                     6) Cyan");
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("                                                     7) Dark Yellow");
+        Console.ForegroundColor = consoleColor;
+        Console.Write("\n\n\n\n\n\n\n\n\n\n\n[>]");
+        color = Console.ReadLine();
+        if (color == "1")
         {
-            slc();
+            log("Settings: SMain Color: Set to White");
+            createfile("White");
+
+        }
+        else
+        if (color == "2")
+        {
+            log("Settings: Main Color: Set to Green");
+            createfile("Green");
+        }
+        else
+        if (color == "3")
+        {
+            log("Settings: Main Color: Set to DarkRed");
+            createfile("DarkRed");
+        }
+        else
+        if (color == "4")
+        {
+            log("Settings: Main Color: Set to DarkMagenta");
+            createfile("DarkMagenta");
+        }
+        else
+        if (color == "5")
+        {
+            log("Settings: Main Color: Set to DarkBlue");
+            createfile("DarkBlue");
+        }
+        else
+        if (color == "6")
+        {
+            log("Settings: Main Color: Set to DarkCyan");
+            createfile("Cyan");
+        }
+        if (color == "7")
+        {
+            log("Settings: Main Color: Set to DarkYellow");
+            createfile("DarkYellow");
         }
         else
         {
-            if (selection0 == "2")
-            {
-                if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("true")))
-                {
-                    log("Autoupdate has been turned off");
-                    using (FileStream fileStream = File.Create("data\\autoupdate.tt"))
-                    {
-                        byte[] bytes = new UTF8Encoding(true).GetBytes("false");
-                        fileStream.Write(bytes, 0, bytes.Length);
-                    }
-                    Settings();
-                }
-                else
-                {
-                    if (File.ReadLines("data\\autoupdate.tt").Any(line => line.Contains("false")))
-                    {
-                        log("Autoupdate has been turned on");
-                        using (FileStream fileStream = File.Create("data\\autoupdate.tt"))
-                        {
-                            byte[] bytes = new UTF8Encoding(true).GetBytes("true");
-                            fileStream.Write(bytes, 0, bytes.Length);
-                        }
-                        Settings();
-                    }
-                }
-            }
-            else
-            {
-                Trashtool();
-            }
-
+            maincolor();
         }
 
-        void slc()
+
+        void createfile(string color)
         {
-            log("Settings: Startup Logo Color");
-            string color;
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("1) White");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("2) Green");
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("3) Red");
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("4) Magenta");
-            Console.ForegroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("5) Blue");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("6) Cyan");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("\n\n[>]");
-            color = Console.ReadLine();
-            if (color == "1")
+            using (FileStream fileStream = File.Create("data\\slc.tt"))
             {
-                log("Settings: Startup Logo Color: Set to White");
-                createfile("White");
+                byte[] bytes = new UTF8Encoding(true).GetBytes(color);
+                fileStream.Write(bytes, 0, bytes.Length);
             }
-            else
-            if (color == "2")
-            {
-                log("Settings: Startup Logo Color: Set to Green");
-                createfile("Green");
-            }
-            else
-            if (color == "3")
-            {
-                log("Settings: Startup Logo Color: Set to DarkRed");
-                createfile("DarkRed");
-            }
-            else
-            if (color == "4")
-            {
-                log("Settings: Startup Logo Color: Set to DarkMagenta");
-                createfile("DarkMagenta");
-            }
-            else
-            if (color == "5")
-            {
-                log("Settings: Startup Logo Color: Set to DarkBlue");
-                createfile("DarkBlue");
-            }
-            else
-            if (color == "6")
-            {
-                log("Settings: Startup Logo Color: Set to Cyan");
-                createfile("Cyan");
-            }
-            else
-            {
-                slc();
-            }
-
-
-            void createfile(string color)
-            {
-                using (FileStream fileStream = File.Create("data\\slc.tt"))
-                {
-                    byte[] bytes = new UTF8Encoding(true).GetBytes(color);
-                    fileStream.Write(bytes, 0, bytes.Length);
-                }
-                Trashtool();
-            }
+            slc = File.ReadAllText("data\\slc.tt");
+            consoleColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), slc, true);
+            Trashtool();
         }
     }
-}
+}   
 catch (Exception ex)
 {
     log("Unknown error happened");
@@ -987,36 +1115,13 @@ catch (Exception ex)
     Console.Write("                                                                                     \r\n    ,----..                               ,--.                   ___     .-''-,--.   \r\n   /   /   \\    ,---,                   ,--.'|                  /  .\\  .`     \\   \\  \r\n  /   .     : ,--.' |               ,--,:  : |                  \\  ; |;        \\.. \\ \r\n .   /   ;.  \\|  |  :            ,`--.'`|  ' :   ,---.           `--\"`    -'.  /'' / \r\n.   ;   /  ` ;:  :  :            |   :  :  | |  '   ,'\\              :   /   \\/___/  \r\n;   |  ; \\ ; |:  |  |,--.        :   |   \\ | : /   /   |             |   :   /       \r\n|   :  | ; | '|  :  '   |        |   : '  '; |.   ; ,. :             ;   |  |        \r\n.   |  ' ' ' :|  |   /' :        '   ' ;.    ;'   | |: :             .   '  .        \r\n'   ;  \\; /  |'  :  | | |        |   | | \\   |'   | .; :             |   :   \\ ___   \r\n \\   \\  ',  / |  |  ' | :        '   : |  ; .'|   :    |         ___ :   \\   /\\   \\  \r\n  ;   :    /  |  :  :_:,'        |   | '`--'   \\   \\  /         /  .\\.    -,`  \\,, \\ \r\n   \\   \\ .'   |  | ,'            '   : |        `----'          \\  ; |;        /`` / \r\n    `---`     `--''              ;   |.'                         `--\"  `.     /   /  \r\n                                 '---'                                   `-,,-'--'   ");
     Console.WriteLine("");
     Console.WriteLine("Something wrong happened");
-    Console.ForegroundColor = ConsoleColor.Cyan;
-    Console.WriteLine("Please wait while we send logs to our team.");
     Console.ForegroundColor = ConsoleColor.White;
-
-    string FilePath = @"log.log";
-
-    using (dWebHook dcWeb = new dWebHook())
-    {
-        dcWeb.UserName = "Trastool Error reporter";
-        dcWeb.WebHook = System.Text.Encoding.UTF8.GetString(data);
-        dcWeb.SendMessage("Error happened on someone computer");
-        log("Error message sent");
-        System.Threading.Thread.Sleep(500);
-    }
-
-
-    using (HttpClient httpClient = new HttpClient())
-    {
-        MultipartFormDataContent form = new MultipartFormDataContent();
-        var file_bytes = System.IO.File.ReadAllBytes(FilePath);
-        form.Add(new ByteArrayContent(file_bytes, 0, file_bytes.Length), "Document", "log.log");
-        httpClient.PostAsync(System.Text.Encoding.UTF8.GetString(data), form).Wait();
-        httpClient.Dispose();
-        System.Threading.Thread.Sleep(2000);
-        Console.WriteLine("Logs has been sent. Press any key to exit");
-        log("File log message sent");
-        Console.ReadKey();
-        log("Quitting applicaton because of an error.");
-        System.Environment.Exit(0);
-    }
+    Console.WriteLine("Please check logs for more info if you can send log to .hexxadd on discord.");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("Press any key to exit...");
+    Console.ReadKey();
+    log("Quitting applicaton because of an error.");
+    System.Environment.Exit(0);
 
 
 
