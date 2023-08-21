@@ -7,8 +7,8 @@ using System.Text;
 
 try
 {
-    int devbuildint = 1;
-    string build = "0.2";
+    int devbuildint = 0;
+    string build = "Version 0.3";
 
     if (devbuildint == 1)
     {
@@ -78,7 +78,7 @@ try
     }
     using (FileStream fileStream = File.Create("data\\versioninfo.tt"))
     {
-        byte[] bytes = new UTF8Encoding(true).GetBytes("0.2");
+        byte[] bytes = new UTF8Encoding(true).GetBytes("0.3");
         fileStream.Write(bytes, 0, bytes.Length);
     }
     if (!File.Exists("data\\autoupdate.tt"))
@@ -263,7 +263,7 @@ try
         Console.ForegroundColor = consoleColor;
         Console.Write("\n                                             █  █▀▄ █▀█ ▀▀█ █▀█  █  █ █ █ █ █                                          \n                                             ▀  ▀ ▀ ▀ ▀ ▀▀▀ ▀ ▀  ▀  ▀▀▀ ▀▀▀ ▀▀▀                                        ");
         Console.ForegroundColor= ConsoleColor.White;
-        Console.Write("                                                     " + build);
+        Console.Write("                                                        " + build);
         Console.ResetColor();
         Console.ForegroundColor = consoleColor;
         Console.Write("\n            Discord Tools                              Other Tools                            TrashTool");
