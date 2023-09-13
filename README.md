@@ -14,7 +14,7 @@ To install just download TrashTool.exe
 
 #### Does it collect any data?
 
-Only what it collect is log of program and windows version but no other data is collected
+No.
 
 #### Why does Chrome, SmartScreen flag it can be unsafe?
 
@@ -26,7 +26,7 @@ Updater.exe is an app that downloads updates. But don't start it manually it wil
 
 #### What to do if there's an error
 
-You don't need to do anything. Logs are sent automatically.
+Sent log to me on discord .hexxadd or just open an issue on github
 ## Authors
 
 - Just me!
