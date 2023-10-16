@@ -34,4 +34,4 @@ Sent log to me on discord .hexxadd or just open an issue on github
 
 ## Suggestions
 
-You can send suggestions at hexeddek@hexeddek.ct8.pl
+You can send suggestions idk where. I think where you want
