@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: idk
+about: Report the bugs or crashes here!
 title: ''
 labels: ''
 assignees: ''
